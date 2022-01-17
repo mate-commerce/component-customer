@@ -1,0 +1,14 @@
+imports:
+  - { resource: packages/orm.yml }
+
+services:
+  # alias definitions
+  MateCommerce\Component\Customer\Loader\CustomerLoaderInterface: '@MateCommerce\Component\Customer\Loader\CustomerChainLoader'
+
+  MateCommerce\Component\Customer\Service\CustomerService:
+    arguments:
+      $customerLoader: '@MateCommerce\Component\Customer\Loader\CustomerLoaderInterface'
+
+  MateCommerce\Component\Customer\Loader\CustomerChainLoader:
+    arguments:
+      $loaders: !tagged_iterator 'mate.commerce.component.customer.loader'
